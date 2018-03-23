@@ -11,7 +11,9 @@ extension Future {
                 return
             }
 
-            callback(ex)
+            DispatchQueue.main.async {
+                callback(ex)
+            }
         }
 
         return self
@@ -31,9 +33,11 @@ extension Future {
                 return
             }
 
-            callback(er)
+            DispatchQueue.main.async {
+                callback(er)
+            }
         }
-        
+
         return self
     }
 
@@ -59,7 +63,7 @@ extension Collection where Element : FutureType {
     public func `do`(_ callback: @escaping ([Element.Expectation]) -> ()) -> Future<[Element.Expectation]> {
         return self.flatten().do(callback)
     }
-    
+
     /// Adds a handler to be asynchronously executed on
     /// completion of all of these futures.
     ///
@@ -71,7 +75,7 @@ extension Collection where Element : FutureType {
     public func `catch`(_ callback: @escaping (Error) -> ()) -> Future<[Element.Expectation]> {
         return self.flatten().catch(callback)
     }
-    
+
     /// Get called back whenever all of these futures are complete,
     /// ignoring the result.
     @discardableResult
