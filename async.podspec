@@ -13,6 +13,6 @@ Pod::Spec.new do |spec|
   spec.osx.deployment_target = "10.13"
   spec.watchos.deployment_target = "4.0"
   spec.tvos.deployment_target = "11.0"
-  spec.swift_version = "4.1"
+  spec.swift_version = "4.0"
 
 end
