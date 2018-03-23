@@ -46,29 +46,6 @@ public struct Future<T>: FutureType {
         case .promise(let promise): return promise.isCompleted
         }
     }
-
-    /// Awaits the expectation without blocking other tasks
-    /// on the `EventLoop`.
-    public func await(on worker: Worker) throws -> Expectation {
-        let result: Result
-        
-        switch storage {
-        case .completed(let completed):
-            result = completed
-        case .promise(let promise):
-            while promise.result == nil {
-                worker.eventLoop.run()
-            }
-            
-            result = promise.result!
-        }
-        
-        switch result {
-        case .error(let error): throw error
-        case .expectation(let exp): return exp
-        }
-    }
-    
     /// Asserts the future is completed and the result must be returned now
     ///
     /// Throws an error if the future wasn't completed or contains an error

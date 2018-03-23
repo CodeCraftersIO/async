@@ -48,7 +48,7 @@ extension Collection where Element : FutureType {
         }
 
         let promise = Promise<[Element.Expectation]>()
-        elements.reserveCapacity(self.count)
+        elements.reserveCapacity(Int(self.count))
 
         for element in self {
             element.addAwaiter { result in
